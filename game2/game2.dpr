@@ -116,12 +116,42 @@ procedure search(var check: string;
                  var score: IMas;
                  var player: integer);
 var k: integer;
-    letter: char;
+    letter: string;
     position: integer;
+    flag: boolean;
 
 begin
-readln(letter);
-letter := Ansiuppercase(letter)[1];
+flag := true;
+while flag do
+    begin
+    flag := false;
+    try
+        readln(letter);
+    except
+        begin
+        writeln('Повторите попытку');
+        writeln('Введите букву русского алфавита');
+        flag := true;
+        end;
+    end;
+    if not flag then
+        begin
+        if length(letter) <> 1 then
+            begin
+            flag := true;
+            writeln('Повторите попытку');
+            writeln('Введите ОДНУ русскую букву');
+            end
+        else if (Ord(letter[1]) < 1040) or (Ord(letter[1]) > 1103) then
+            begin
+            flag := true;
+            writeln(Ord(letter[1]));
+            writeln('Повторите попытку');
+            writeln('Введите одну РУССКУЮ букву');
+            end;
+        end;
+    end;
+letter := Ansiuppercase(letter);
 position := pos(letter, word);
 k := 0;
 if position > 0 then
@@ -129,7 +159,7 @@ if position > 0 then
     while position > 0 do
         begin
         Inc(k);
-        check[position] := letter;
+        check[position] := letter[1];
         word[position] := '-';
         position := pos(letter, word);
         end;
