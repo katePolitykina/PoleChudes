@@ -222,12 +222,12 @@ while game do
         else
             begin
             writeln(ball:10, ' ОЧКОВ');
-            write('БУКВА...   ');
-            {writeln('██████  ██    ██ ██   ██ ██████   █████ ');
+            //write('БУКВА...   ');
+            writeln('██████  ██    ██ ██   ██ ██████   █████ ');
             writeln('██       ██  ██  ██  ██  ██   ██ ██   ██');
             writeln('██████    ████   █████   ██████  ███████');
             writeln('██   ██    ██    ██  ██  ██   ██ ██   ██');
-            writeln('██████    ██     ██   ██ ██████  ██   ██');}
+            writeln('██████    ██     ██   ██ ██████  ██   ██');
             search(show, word, score, player);
             end;
         flag := false;
