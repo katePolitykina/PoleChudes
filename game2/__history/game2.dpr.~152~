@@ -136,7 +136,6 @@ while flag do
         flag := true;
         end;
     end;
-    writeln(pos(letter, check));
     if not flag then
         begin
         if length(letter) <> 1 then
@@ -151,7 +150,7 @@ while flag do
             writeln('Повторите попытку');
             writeln('Введите одну РУССКУЮ букву');
             end
-        else if pos(letter, check) <> 0 then
+        else if pos(Ansiuppercase(letter), check) <> 0 then
             begin
             flag := true;
             writeln('Повторите попытку');
@@ -172,11 +171,11 @@ if position > 0 then
         position := pos(letter, word);
         end;
     score[player] := score[player] + k * ball;
-    player := player - 1;                //повтор хода
     end
 else
     begin
     writeln('Нет такой буквы');
+    player := player + 1;
     end;
 end;
 
@@ -211,6 +210,9 @@ while game do
         if ball = 0 then
             begin
             writeln('Переход хода':20);
+            writeln('Нажмите Enter');
+            readln;
+            player := player + 1;
             end
         else if ball = -1 then
             begin
@@ -234,7 +236,9 @@ while game do
             if word[i] <> '-' then flag := true;
             end;
         game := flag;
-        player := player + 1;
         end;
     end;
+writeln('Победил ', player, '-й игрок');
+writeln('Слово ', show);
+readln;
 end.
