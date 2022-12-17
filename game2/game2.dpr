@@ -14,6 +14,7 @@ var game: boolean;
     player: integer;
     ball: integer;
     score: IMas;
+    flag: boolean;
 procedure input(var word: string;
                 var definition: string;
                 var len_word: integer);
@@ -114,7 +115,8 @@ end;
 procedure search(var check: string;
                  var word: string;
                  var score: IMas;
-                 var player: integer);
+                 var player: integer
+                 );
 var k: integer;
     letter: string;
     position: integer;
@@ -145,9 +147,14 @@ while flag do
         else if (Ord(letter[1]) < 1040) or (Ord(letter[1]) > 1103) then
             begin
             flag := true;
-            writeln(Ord(letter[1]));
             writeln('Повторите попытку');
             writeln('Введите одну РУССКУЮ букву');
+            end
+        else if pos(Ansiuppercase(letter), check) <> 0 then
+            begin
+            flag := true;
+            writeln('Повторите попытку');
+            writeln('Введите одну ЗАКРЫТУЮ русскую букву');
             end;
         end;
     end;
@@ -164,11 +171,11 @@ if position > 0 then
         position := pos(letter, word);
         end;
     score[player] := score[player] + k * ball;
-    player := player - 1;                //повтор хода
     end
 else
     begin
     writeln('Нет такой буквы');
+    player := player + 1;
     end;
 end;
 
@@ -187,7 +194,8 @@ writeln('Начнём игру');
 game := True;
 while game do
     begin
-    for player := 1 to 3 do
+    player := 1;
+    while (player <= 3) and (game) do
         begin
         writeln;
         write(definition, ': ');
@@ -202,6 +210,9 @@ while game do
         if ball = 0 then
             begin
             writeln('Переход хода':20);
+            writeln('Нажмите Enter');
+            readln;
+            player := player + 1;
             end
         else if ball = -1 then
             begin
@@ -219,6 +230,15 @@ while game do
             writeln('██████    ██     ██   ██ ██████  ██   ██');
             search(show, word, score, player);
             end;
+        flag := false;
+        for i := 1 to len_word do
+            begin
+            if word[i] <> '-' then flag := true;
+            end;
+        game := flag;
         end;
     end;
+writeln('Победил ', player, '-й игрок');
+writeln('Слово ', show);
+readln;
 end.
