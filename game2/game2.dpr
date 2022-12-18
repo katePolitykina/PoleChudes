@@ -136,6 +136,8 @@ while flag do
         flag := true;
         end;
     end;
+    letter := Trim(letter);
+    letter := Ansiuppercase(letter);
     if not flag then
         begin
         if length(letter) <> 1 then
@@ -150,7 +152,7 @@ while flag do
             writeln('Повторите попытку');
             writeln('Введите одну РУССКУЮ букву');
             end
-        else if pos(Ansiuppercase(letter), check) <> 0 then
+        else if pos(letter, check) <> 0 then
             begin
             flag := true;
             writeln('Повторите попытку');
@@ -158,7 +160,6 @@ while flag do
             end;
         end;
     end;
-letter := Ansiuppercase(letter);
 position := pos(letter, word);
 k := 0;
 if position > 0 then
