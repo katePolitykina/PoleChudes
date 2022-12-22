@@ -1,7 +1,7 @@
 ﻿program game2;
 {$APPTYPE CONSOLE}
 uses SysUtils;
-const N_MAX = 200;
+const N_MAX = 201;
 type TMas = array[1..N_MAX] of string;
      IMas = array[1..3] of integer;
 var game: boolean;
