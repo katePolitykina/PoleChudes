@@ -146,7 +146,9 @@ while flag do
             writeln('Повторите попытку');
             writeln('Введите ОДНУ русскую букву');
             end
-        else if (Ord(letter[1]) < 1040) or (Ord(letter[1]) > 1103) then
+        else if ((Ord(letter[1]) < 1040)
+                or (Ord(letter[1]) > 1103))
+                and (Ord(letter[1]) <> 1025) then
             begin
             flag := true;
             writeln('Повторите попытку');

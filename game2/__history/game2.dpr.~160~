@@ -1,7 +1,7 @@
 ﻿program game2;
 {$APPTYPE CONSOLE}
 uses SysUtils;
-const N_MAX = 100;
+const N_MAX = 201;
 type TMas = array[1..N_MAX] of string;
      IMas = array[1..3] of integer;
 var game: boolean;
@@ -99,12 +99,12 @@ var chance: integer;
 
 begin
 randomize;
-chance := random(11);
-if chance <= 8 then
+chance := random(15);
+if chance <= 12 then
     begin
     ball := random(21)*10 + 100;
     end
-else if chance = 9 then
+else if chance = 13 then
     begin
     ball := -1;
     end
@@ -121,7 +121,7 @@ var k: integer;
     letter: string;
     position: integer;
     flag: boolean;
-
+    r: integer;
 begin
 flag := true;
 while flag do
@@ -136,6 +136,8 @@ while flag do
         flag := true;
         end;
     end;
+    letter := Trim(letter);
+    letter := Ansiuppercase(letter);
     if not flag then
         begin
         if length(letter) <> 1 then
@@ -146,11 +148,12 @@ while flag do
             end
         else if (Ord(letter[1]) < 1040) or (Ord(letter[1]) > 1103) then
             begin
+            writeln(Ord(letter[1]));
             flag := true;
             writeln('Повторите попытку');
             writeln('Введите одну РУССКУЮ букву');
             end
-        else if pos(Ansiuppercase(letter), check) <> 0 then
+        else if pos(letter, check) <> 0 then
             begin
             flag := true;
             writeln('Повторите попытку');
@@ -158,11 +161,13 @@ while flag do
             end;
         end;
     end;
-letter := Ansiuppercase(letter);
 position := pos(letter, word);
 k := 0;
+writeln;
+writeln;
 if position > 0 then
     begin
+    writeln('Откройте букву ', letter);
     while position > 0 do
         begin
         Inc(k);
@@ -174,6 +179,10 @@ if position > 0 then
     end
 else
     begin
+    r := random(3);
+    if r = 0 then writeln('Да ладно!')
+    else if r = 1 then writeln('Увы и ах')
+    else if r = 2 then writeln('Что вы говорите!');
     writeln('Нет такой буквы');
     player := player + 1;
     end;
@@ -197,7 +206,6 @@ while game do
     player := 1;
     while (player <= 3) and (game) do
         begin
-        writeln;
         write(definition, ': ');
         for i := 1 to len_word do write(show[i], ' ');
         writeln;
@@ -209,14 +217,26 @@ while game do
         rotation(ball);
         if ball = 0 then
             begin
-            writeln('Переход хода':20);
+            //writeln('Переход хода':20);
+            writeln;
+            writeln('███████ ███████ ██████  ███████ ██   ██  ██████   █████      ██   ██  ██████   █████   █████');
+            writeln('██   ██ ██      ██   ██ ██       ██ ██  ██    ██  ██ ██       ██ ██  ██    ██  ██ ██  ██   ██');
+            writeln('██   ██ █████   ██████  █████     ███   ██    ██  ██ ██        ███   ██    ██  ██ ██  ███████');
+            writeln('██   ██ ██      ██      ██       ██ ██  ██    ██ ███████      ██ ██  ██    ██ ███████ ██   ██');
+            writeln('██   ██ ███████ ██      ███████ ██   ██  ██████  ██   ██     ██   ██  ██████  ██   ██ ██   ██');
             writeln('Нажмите Enter');
             readln;
             player := player + 1;
             end
         else if ball = -1 then
             begin
-            writeln('Сектор +':10);
+            //writeln('Сектор +':10);
+            writeln;
+            writeln(' ██████ ███████ ██   ██ ████████  ██████  ██████          ██     ');
+            writeln('██      ██      ██  ██     ██    ██    ██ ██   ██         ██     ');
+            writeln('██      █████   █████      ██    ██    ██ ██████      ██████████ ');
+            writeln('██      ██      ██  ██     ██    ██    ██ ██              ██     ');
+            writeln(' ██████ ███████ ██   ██    ██     ██████  ██              ██     ');
             sektorplus(word, show);
             end
         else
@@ -227,7 +247,7 @@ while game do
             writeln('██       ██  ██  ██  ██  ██   ██ ██   ██');
             writeln('██████    ████   █████   ██████  ███████');
             writeln('██   ██    ██    ██  ██  ██   ██ ██   ██');
-            writeln('██████    ██     ██   ██ ██████  ██   ██');
+            writeln('██████    ██     ██   ██ ██████  ██   ██   ██   ██   ██');
             search(show, word, score, player);
             end;
         flag := false;
@@ -238,7 +258,9 @@ while game do
         game := flag;
         end;
     end;
+writeln('Вы выиграли АААААААААААААВТОМОБИЛЬ');
 writeln('Победил ', player, '-й игрок');
 writeln('Слово ', show);
+writeln('Очки ', score[player]);
 readln;
 end.
